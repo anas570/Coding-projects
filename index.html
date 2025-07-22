@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Hacker Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js "></script>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        header nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+        }
+
+        header nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #77aaff;
+            transition: width 0.3s ease;
+        }
+
+        header nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Home Section */
+        #home {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+        }
+
+        #home canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #home .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        #home h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        #home p {
+            font-size: 24px;
+        }
+
+        /* About Section */
+        #about {
+            background: #1a1a1a;
+        }
+
+        #about canvas {
+            display: block;
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Skills Section */
+        #skills ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        #skills ul li {
+            background: #2a2a2a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #skills ul li:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #77aaff;
+        }
+
+        /* Projects Section */
+        #projects .project {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            max-width: 800px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #projects .project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(119, 170, 255, 0.5);
+        }
+
+        /* Contact Section */
+        #contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #contact input, #contact textarea {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #3a3a3a;
+            color: #fff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        #contact input:focus, #contact textarea:focus {
+            box-shadow: 0 0 10px #77aaff;
+        }
+
+        #contact button {
+            padding: 10px;
+            background: linear-gradient(to right, #77aaff, #ff77aa);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #contact button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home">
+        <canvas id="bg"></canvas>
+        <div class="container content">
+            <h1>Welcome to My Portfolio</h1>
+            <p>I'm John Doe, an Ethical Hacker & Cybersecurity Expert</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <canvas id="avatarCanvas"></canvas>
+            <p>Hello! I specialize in penetration testing, vulnerability assessments, and securing digital infrastructures.</p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2>Skills</h2>
+            <ul>
+                <li>Penetration Testing</li>
+                <li>Vulnerability Assessment</li>
+                <li>Network Security</li>
+                <li>Web Application Security</li>
+                <li>Programming: Python, Bash, C++</li>
+                <li>Tools: Metasploit, Nmap, Burp Suite, Wireshark</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Penetration Testing for XYZ Corp</h3>
+                <p>Conducted a full-scale penetration test on XYZ Corp's internal network, identifying critical vulnerabilities.</p>
+            </div>
+            <div class="project">
+                <h3>Vulnerability Assessment for ABC Inc</h3>
+                <p>Performed a vulnerability assessment on ABC Inc's web application, discovering SQL injection and XSS vulnerabilities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+        <div class="container">
+            <h2>Certifications</h2>
+            <ul>
+                <li>Certified Ethical Hacker (CEH)</li>
+                <li>Offensive Security Certified Professional (OSCP)</li>
+                <li>Certified Information Systems Security Professional (CISSP)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Message" rows="5" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 John Doe | Ethical Hacker</p>
+    </footer>
+
+    <!-- Three.js Background Animation -->
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg') });
+
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.setZ(30);
+
+        const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+        const material = new THREE.MeshStandardMaterial({ color: 0x77aaff });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+
+        const pointLight = new THREE.PointLight(0xffffff);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.005;
+            torus.rotation.z += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+
+    <!-- Load Custom 3D Model -->
+    <script>
+        const avatarScene = new THREE.Scene();
+        const avatarCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const avatarRenderer = new THREE.WebGLRenderer({ canvas: document.getElementById('avatarCanvas') });
+
+        avatarRenderer.setSize(300, 300);
+        avatarCamera.position.z = 5;
+
+        const loader = new THREE.GLTFLoader();
+        let avatar;
+
+        loader.load(
+            'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AnimatedCube/glTF-Binary/AnimatedCube.glb ', // Replace with your GLTF/GLB model URL
+            (gltf) => {
+                avatar = gltf.scene;
+                avatar.scale.set(0.5, 0.5, 0.5); // Adjust scale as needed
+                avatarScene.add(avatar);
+            },
+            undefined,
+            (error) => {
+                console.error('Error loading 3D model:', error);
+            }
+        );
+
+        const avatarLight = new THREE.PointLight(0xffffff, 1, 100);
+        avatarLight.position.set(5, 5, 5);
+        avatarScene.add(avatarLight);
+
+        function animateAvatar() {
+            requestAnimationFrame(animateAvatar);
+            if (avatar) avatar.rotation.y += 0.01;
+            avatarRenderer.render(avatarScene, avatarCamera);
+        }
+
+        animateAvatar();
+    </script>
+
+    <!-- Particle Effects -->
+    <script>
+        const particleScene = new THREE.Scene();
+        const particleCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const particleRenderer = new THREE.WebGLRenderer({ alpha: true });
+        particleRenderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(particleRenderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 5000;
+
+        const positions = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: 0x77aaff,
+        });
+
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        particleScene.add(particles);
+
+        particleCamera.position.z = 5;
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            particles.rotation.x += 0.001;
+            particles.rotation.y += 0.001;
+            particleRenderer.render(particleScene, particleCamera);
+        }
+
+        animateParticles();
+    </script>
+
+    <!-- Scroll Animations -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('#about', {
+            scrollTrigger: '#about',
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from('#skills', {
+            scrollTrigger: '#skills',
+            opacity: 0,
+            x: -50,
+            duration: 1
+        });
+
+        gsap.from('#projects', {
+            scrollTrigger: '#projects',
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+
+        gsap.from('#certifications', {
+            scrollTrigger: '#certifications',
+            opacity: 0,
+            x: 50,
+            duration: 1
+        });
+
+        gsap.from('#contact', {
+            scrollTrigger: '#contact',
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+    </script>
+</body>
+</html>
